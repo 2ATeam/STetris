@@ -6,20 +6,21 @@ import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class STetris extends JFrame{
+public class STetrisWindow extends JFrame{
     private JPanel pnlRootPane;
     private JPanel pnlCanvas;
     private Canvas canvas;
+    private STetris tetris;
     private STController controller;
 
-    public STetris() {
+    public STetrisWindow() {
         setTitle("Swing Tetris");
-        setSize(800, 600);
+        setSize(450, 800);
         setContentPane(pnlRootPane);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        controller = new STController(new TileMap(20, 10));
-        canvas.setMap(controller.getMap());
-        controller.addFigure(Figure.createFigure(FigureTypes.T_SHAPE));
+        tetris = new STetris();
+        controller = tetris.getController();
+        canvas.setMap(tetris.getMap());
         addKeyListener(new KeyListener());
         setVisible(true);
     }
@@ -56,6 +57,10 @@ public class STetris extends JFrame{
                         }
                         case KeyEvent.VK_SPACE: {
                             controller.rotate(true);
+                            break;
+                        }
+                        case KeyEvent.VK_ENTER:{
+                            tetris.spawnFigure();
                             break;
                         }
                     }

@@ -1,9 +1,9 @@
 package def;
 
-import def.visualization.STetris;
+import def.visualization.STetrisWindow;
 
 public class Core {
     public static void main(String[] args) {
-        new STetris();
+        new STetrisWindow();
     }
 }
