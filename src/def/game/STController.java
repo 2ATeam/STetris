@@ -127,19 +127,34 @@ public class STController {
         assert currentFigure != null;
         int figEndX = curFigurePos.x + currentFigure.getRows() - 1;
         int figEndY = curFigurePos.y;
+        Figure tmp = (Figure)currentFigure.clone();
+        fillMaskRegion(TileTypes.FREE);
+        rotateFigure(clockwise);
+        boolean willOverlap = isOverlapping();
+        currentFigure = tmp;
+        projectFigure();
         return isWithin(0, figEndX, map.getCollsAmount() - 1, true) &&
-               isWithin(0, figEndY, map.getRowsAmount() - 1, true);
+               isWithin(0, figEndY, map.getRowsAmount() - 1, true) &&
+               !willOverlap;
+    }
+
+    private void rotateFigure(boolean clockwise){
+        if (clockwise)
+            currentFigure.rotateClockwise();
+        else
+            currentFigure.rotateCClockwise();
     }
 
     public void rotate(boolean clockwise){
         assert currentFigure != null;
         fillMaskRegion(TileTypes.FREE);
-        if (clockwise)
-            currentFigure.rotateClockwise();
-        else
-            currentFigure.rotateCClockwise();
-
+        rotateFigure(clockwise);
         projectFigure();
+    }
+
+    public void clearLine(int rowIndex) {
+        map.removeRow(rowIndex);
+        map.addRow(TileTypes.FREE);
     }
 
 /** UTILS */
@@ -149,4 +164,6 @@ public class STController {
         else
             return (min < value && value < max);
     }
+
+
 }

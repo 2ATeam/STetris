@@ -58,7 +58,7 @@ public class Figure {
         return figure;
     }
 
-    public void rotateClockwise() {
+    public void rotateCClockwise() {
         TileTypes[][] newFig = new TileTypes[columns][rows];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -69,10 +69,9 @@ public class Figure {
         int x = columns;
         columns = rows;
         rows = x;
-
     }
 
-    public void rotateCClockwise() {
+    public void rotateClockwise() {
 
     }
 
@@ -86,5 +85,12 @@ public class Figure {
 
     public TileTypes[][] getMask() {
         return mask;
+    }
+
+    @Override
+    protected Object clone(){
+        Figure f = new Figure(columns, rows);
+        f.mask = this.mask.clone();
+        return f;
     }
 }

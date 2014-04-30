@@ -63,8 +63,8 @@ public class STetrisWindow extends JFrame{
                         break;
                     }
                     case KeyEvent.VK_SPACE: {
-                        if(controller.willRotate(true))
-                            controller.rotate(true);
+                        if(controller.willRotate(false))
+                            controller.rotate(false);
                         break;
                     }
                     case KeyEvent.VK_ENTER:{

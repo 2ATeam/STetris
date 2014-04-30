@@ -44,14 +44,28 @@ public class STetris {
             controller.moveFigure(Directions.DOWN);
         }
         else {
+            checkLines();
             spawnFigure();
         }
         canvas.repaint();
     }
 
-    public void spawnFigure() {
+    private void checkLines() {
+        int blocksInLine;
+        for (int i = map.getRowsAmount()-1; i >=0; --i) {
+            blocksInLine = 0;
+            for (int j = 0; j < map.getCollsAmount(); j++) {
+                if (map.getTile(i,j) == TileTypes.BLOCK) ++blocksInLine;
+            }
+            if (blocksInLine == map.getCollsAmount()){
+                controller.clearLine(i);
+            }
+            else if (blocksInLine == 0) break;
+        }
+    }
 
-        controller.addFigure(Figure.createFigure(FigureTypes.J_SHAPE));
+    public void spawnFigure() {
+        controller.addFigure(Figure.createFigure(FigureTypes.I_SHAPE));
     }
 
     public void setCanvas(Canvas canvas) {
