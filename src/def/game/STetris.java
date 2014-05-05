@@ -3,6 +3,7 @@ package def.game;
 
 import def.visualization.Canvas;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class STetris {
@@ -10,6 +11,8 @@ public class STetris {
     private TileMap map;
     private STController controller;
     private Canvas canvas;
+    public static ArrayList<Tile> tilePool;
+
     private static final Random rnd = new Random(System.currentTimeMillis());
 
     public STetris() {
@@ -52,20 +55,21 @@ public class STetris {
 
     private void checkLines() {
         int blocksInLine;
-        for (int i = map.getRowsAmount()-1; i >=0; --i) {
+        int i = map.getRowsAmount() - 1;
+        do {
             blocksInLine = 0;
             for (int j = 0; j < map.getCollsAmount(); j++) {
-                if (map.getTile(i,j) == TileTypes.BLOCK) ++blocksInLine;
+                if (map.getTile(i, j) == TileTypes.BLOCK) ++blocksInLine;
             }
-            if (blocksInLine == map.getCollsAmount()){
+            if (blocksInLine == map.getCollsAmount()) {
                 controller.clearLine(i);
             }
-            else if (blocksInLine == 0) break;
-        }
+            else --i;
+        } while (i >= 0 && blocksInLine > 0);
     }
 
     public void spawnFigure() {
-        controller.addFigure(Figure.createFigure(FigureTypes.I_SHAPE));
+        controller.addFigure(Figure.createFigure(FigureTypes.getRandom()));
     }
 
     public void setCanvas(Canvas canvas) {
