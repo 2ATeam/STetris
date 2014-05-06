@@ -2,19 +2,19 @@ package def.game;
 
 
 import def.visualization.Canvas;
-
-import java.util.Random;
+import def.visualization.TilesetProcessor;
 
 public class STetris {
 
     private TileMap map;
     private STController controller;
     private Canvas canvas;
-    private static final Random rnd = new Random(System.currentTimeMillis());
+    private final String tilesetPath = "tilesets/tileset.png";
 
     public STetris() {
         map = new TileMap(20, 10);
         controller = new STController(map);
+        TilesetProcessor.getInstance().loadTileset(tilesetPath);
     }
 
     public STController getController() {
@@ -24,7 +24,6 @@ public class STetris {
     public TileMap getMap() {
         return map;
     }
-
 
     public void mainLoop() {
         long lastDropTime = System.currentTimeMillis();
@@ -55,7 +54,7 @@ public class STetris {
         for (int i = map.getRowsAmount()-1; i >=0; --i) {
             blocksInLine = 0;
             for (int j = 0; j < map.getCollsAmount(); j++) {
-                if (map.getTile(i,j) == TileTypes.BLOCK) ++blocksInLine;
+                if (map.getTile(i,j).getType() == TileTypes.BLOCK) ++blocksInLine;
             }
             if (blocksInLine == map.getCollsAmount()){
                 controller.clearLine(i);

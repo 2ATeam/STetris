@@ -1,10 +1,12 @@
 package def.game;
 
+import def.visualization.Tile;
+
 import java.util.ArrayList;
 
 public class TileMap {
 
-    private ArrayList<TileTypes[]> map;
+    private ArrayList<Tile[]> map;
     private int collsAmount;
     private int rowsAmount;
 
@@ -17,9 +19,9 @@ public class TileMap {
 
     public void initMap(){
         for (int i = 0; i < rowsAmount; i++) {
-            map.add(i, new TileTypes[collsAmount]);
+            map.add(i, new Tile[collsAmount]);
             for (int j = 0; j < collsAmount; j++) {
-                map.get(i)[j] = TileTypes.FREE;
+                map.get(i)[j] = new Tile(TileTypes.FREE);
             }
         }
     }
@@ -32,22 +34,22 @@ public class TileMap {
         return rowsAmount;
     }
 
-    public TileTypes getTile(int row, int column) {
+    public Tile getTile(int row, int column) {
         return map.get(row)[column];
     }
 
-    public void setTile(int row, int column, TileTypes type) {
-        map.get(row)[column] = type;
+    public void setTile(int row, int column, Tile tile) {
+        map.get(row)[column] = tile;
     }
 
     public void removeRow(int index){
         map.remove(index);
         --rowsAmount;
     }
-    public void addRow(TileTypes type){
-        map.add(0, new TileTypes[collsAmount]);
+    public void addRow(Tile tile){
+        map.add(0, new Tile[collsAmount]);
         for (int i = 0; i < collsAmount; i++) {
-            map.get(0)[i] = type;
+            map.get(0)[i] = tile;
         }
         ++rowsAmount;
     }

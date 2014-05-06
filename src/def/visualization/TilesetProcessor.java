@@ -1,5 +1,8 @@
 package def.visualization;
 
+import def.game.Materials;
+import def.game.TileTypes;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -9,10 +12,12 @@ import java.util.ArrayList;
 
 public final class TilesetProcessor {
 
+    private static TilesetProcessor instance;
     private BufferedImage tileset;
     private ArrayList<BufferedImage> slicedTileset;
+    private Tile[] tilePool;
 
-    public TilesetProcessor(String tilesetPath) {
+    public void loadTileset(String tilesetPath) {
         try {
             tileset = loadImage(tilesetPath);
         } catch (IOException e) {
@@ -20,7 +25,26 @@ public final class TilesetProcessor {
         }
     }
 
-    public ArrayList<BufferedImage> splitIntoChunks(int rows, int colls, int chunkWidth, int chunkHeight) {
+    public static TilesetProcessor getInstance() {
+        if (instance == null)
+            instance = new TilesetProcessor();
+
+        return instance;
+    }
+
+    private void fillTilePool() {
+        tilePool = new Tile[Materials.values().length];
+        tilePool[Materials.L_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.L_MATERIAL.ordinal()), TileTypes.BLOCK);
+        tilePool[Materials.J_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.J_MATERIAL.ordinal()), TileTypes.BLOCK);
+        tilePool[Materials.Z_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.Z_MATERIAL.ordinal()), TileTypes.BLOCK);
+        tilePool[Materials.S_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.S_MATERIAL.ordinal()), TileTypes.BLOCK);
+        tilePool[Materials.T_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.T_MATERIAL.ordinal()), TileTypes.BLOCK);
+        tilePool[Materials.O_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.O_MATERIAL.ordinal()), TileTypes.BLOCK);
+        tilePool[Materials.I_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.I_MATERIAL.ordinal()), TileTypes.BLOCK);
+        tilePool[Materials.TRANSPARENT_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.TRANSPARENT_MATERIAL.ordinal()), TileTypes.BLOCK);
+    }
+
+    public void splitIntoChunks(int rows, int colls, int chunkWidth, int chunkHeight) {
         ArrayList<BufferedImage> chunks = new ArrayList<>();
         BufferedImage chunk;
         Graphics2D g2d;
@@ -39,7 +63,7 @@ public final class TilesetProcessor {
             }
         }
         slicedTileset = chunks;
-        return chunks;
+        fillTilePool();
     }
 
     private BufferedImage loadImage(String source) throws IOException {
@@ -51,11 +75,15 @@ public final class TilesetProcessor {
         return img;
     }
 
-    public BufferedImage getTileAt(int index) {
-        return slicedTileset.get(index);
+    public BufferedImage getChunkAt(int index) {
+        try {
+            return slicedTileset.get(index);
+        } catch (IndexOutOfBoundsException ex) {
+            return slicedTileset.get(0);
+        }
     }
 
-    public void setTileset(BufferedImage tileset) {
-        this.tileset = tileset;
+    public Tile getTileAt(int index) {
+        return tilePool[index];
     }
 }
