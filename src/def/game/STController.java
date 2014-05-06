@@ -167,6 +167,4 @@ public class STController {
         else
             return (min < value && value < max);
     }
-
-
 }
