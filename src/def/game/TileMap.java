@@ -1,6 +1,7 @@
 package def.game;
 
 import def.visualization.Tile;
+import def.visualization.TilesetProcessor;
 
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ public class TileMap {
         for (int i = 0; i < rowsAmount; i++) {
             map.add(i, new Tile[collsAmount]);
             for (int j = 0; j < collsAmount; j++) {
-                map.get(i)[j] = new Tile(TileTypes.FREE);
+                map.get(i)[j] = TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal());
             }
         }
     }

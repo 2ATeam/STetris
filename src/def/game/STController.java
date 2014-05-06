@@ -149,7 +149,7 @@ public class STController {
 
     public void clearLine(int rowIndex) {
         map.removeRow(rowIndex);
-        fillMaskRegion(TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal()));
+        map.addRow(TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal()));
     }
 
     public TileMap getMap() {

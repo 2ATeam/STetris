@@ -13,9 +13,10 @@ public class STetris {
     private final String tilesetPath = "tilesets/tileset.png";
 
     public STetris() {
+        TilesetProcessor.getInstance().loadTileset(tilesetPath);
+        TilesetProcessor.getInstance().splitIntoChunks(4, 6, 64, 64);
         map = new TileMap(20, 10);
         controller = new STController(map);
-        TilesetProcessor.getInstance().loadTileset(tilesetPath);
     }
 
     public STController getController() {

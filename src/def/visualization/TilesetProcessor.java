@@ -41,7 +41,7 @@ public final class TilesetProcessor {
         tilePool[Materials.T_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.T_MATERIAL.ordinal()), TileTypes.BLOCK);
         tilePool[Materials.O_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.O_MATERIAL.ordinal()), TileTypes.BLOCK);
         tilePool[Materials.I_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.I_MATERIAL.ordinal()), TileTypes.BLOCK);
-        tilePool[Materials.TRANSPARENT_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.TRANSPARENT_MATERIAL.ordinal()), TileTypes.BLOCK);
+        tilePool[Materials.TRANSPARENT_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.TRANSPARENT_MATERIAL.ordinal()), TileTypes.FREE);
     }
 
     public void splitIntoChunks(int rows, int colls, int chunkWidth, int chunkHeight) {

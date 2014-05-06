@@ -17,18 +17,9 @@ public class Canvas extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         for (int i = 0; i < map.getRowsAmount(); i++) {
             for (int j = 0; j < map.getCollsAmount(); j++) {
-                switch (map.getTile(i, j).getType()) {
-                    case BLOCK: {
-                        g2d.setPaint(Color.GREEN);
-                        g2d.fill3DRect(j * mapOffset + mapOffset, i * mapOffset + mapOffset, blockSize, blockSize, true);
-                        break;
-                    }
-                    case FREE: {
-                        g2d.setPaint(Color.GRAY);
-                        g2d.drawRect(j * mapOffset + mapOffset, i * mapOffset + mapOffset, blockSize, blockSize);
-                        break;
-                    }
-                }
+                g2d.drawImage(map.getTile(i, j).getImage(), j * mapOffset + mapOffset,
+                                                            i * mapOffset + mapOffset,
+                                                            blockSize, blockSize, null);
             }
         }
     }
