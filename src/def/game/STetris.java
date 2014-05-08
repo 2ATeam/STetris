@@ -1,6 +1,5 @@
 package def.game;
 
-
 import def.visualization.Canvas;
 import def.visualization.TilesetProcessor;
 
@@ -10,30 +9,25 @@ public class STetris {
     private TileMap map;
     private STController controller;
     private Canvas canvas;
-    private final String tilesetPath = "tilesets/tileset.png";
+    private Stats playerStats;
+    private boolean isStuck = false;
+    private boolean isLoosed = false;
+
 
     public STetris() {
-        TilesetProcessor.getInstance().loadTileset(tilesetPath);
+        TilesetProcessor.getInstance().loadTileset(Config.tilesetPath);
         TilesetProcessor.getInstance().splitIntoChunks(4, 6, 64, 64);
-        map = new TileMap(20, 10);
+        map = new TileMap(Config.mapHeight, Config.mapWidth);
         controller = new STController(map);
-    }
-
-    public STController getController() {
-        return controller;
-    }
-
-    public TileMap getMap() {
-        return map;
+        playerStats = new Stats(); // default.
     }
 
     public void mainLoop() {
         long lastDropTime = System.currentTimeMillis();
-        final long spawnFrequency = 1000L;
         spawnFigure();
 
-        while (true) {
-            if (System.currentTimeMillis() - lastDropTime > spawnFrequency) {
+        while (!isLoosed) {
+            if (System.currentTimeMillis() - lastDropTime > playerStats.getSpeed()) {
                 lastDropTime = System.currentTimeMillis();
                 tick();
             }
@@ -43,16 +37,26 @@ public class STetris {
     private void tick() {
         if(!controller.willOverlap(Directions.DOWN)) {
             controller.moveFigure(Directions.DOWN);
+            isStuck = false;
         }
-        else {
+        else if(isStuck) {
+            gameOver();
+        }
+        else{
             checkLines();
             spawnFigure();
+            isStuck = true;
         }
         canvas.repaint();
     }
 
+    private void gameOver() {
+        isLoosed = true;
+    }
+
     private void checkLines() {
         int blocksInLine;
+        int clearedLines = 0;
         int i = map.getRowsAmount() - 1;
         do {
             blocksInLine = 0;
@@ -61,9 +65,14 @@ public class STetris {
             }
             if (blocksInLine == map.getCollsAmount()) {
                 controller.clearLine(i);
+                ++clearedLines;
             }
             else --i;
         } while (i >= 0 && blocksInLine > 0);
+        if (clearedLines > 0) {
+            playerStats.increaseScore(clearedLines);
+            System.out.println(playerStats.toString());
+        }
     }
 
     public void spawnFigure() {
@@ -72,5 +81,13 @@ public class STetris {
 
     public void setCanvas(Canvas canvas) {
         this.canvas = canvas;
+    }
+
+    public STController getController() {
+        return controller;
+    }
+
+    public TileMap getMap() {
+        return map;
     }
 }

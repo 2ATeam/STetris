@@ -4,10 +4,6 @@ import def.game.TileTypes;
 
 import java.awt.image.BufferedImage;
 
-/**
- * Created by Alvo on 05.05.2014.
- */
-
 public class Tile {
 
     BufferedImage image;
