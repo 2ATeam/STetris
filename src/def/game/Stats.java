@@ -25,7 +25,7 @@ public class Stats {
 
     private void levelUp() {
         level++;
-        speed -= 300L;
+        speed -= Config.speedIncrement;
         multiplier *= 2;
     }
 

@@ -7,12 +7,10 @@ public class Figure {
 
     private int columns, rows;
     private Tile[][] mask;
-    private TilesetProcessor tpInstance;
 
     private Figure(int columns, int rows) {
         this.columns = columns;        
         this.rows = rows;
-        tpInstance = TilesetProcessor.getInstance();
     }
 
     public static Figure createFigure(FigureTypes type) {

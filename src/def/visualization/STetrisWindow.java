@@ -9,27 +9,31 @@ import java.awt.event.KeyEvent;
 public class STetrisWindow extends JFrame{
     private JPanel pnlRootPane;
     private JPanel pnlCanvas;
-    private Canvas canvas;
+    private GameField gameField;
     private STetris tetris;
     private STController controller;
 
     public STetrisWindow() {
         setTitle("Swing Tetris");
-        setSize(450, 800);
+        setSize(Config.mapWidth * Config.blockSize, Config.mapHeight * Config.blockSize);
+        setLocation(100, 100);
+        setResizable(false);
+        setUndecorated(true);
+        setLocationRelativeTo(null);
         setContentPane(pnlRootPane);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         tetris = new STetris();
         controller = tetris.getController();
-        tetris.setCanvas(canvas);
-        canvas.setMap(tetris.getMap());
+        tetris.setGameField(gameField);
+        gameField.setMap(tetris.getMap());
         addKeyListener(new KeyListener());
         setVisible(true);
         tetris.mainLoop();
     }
 
     private void createUIComponents() {
-        pnlCanvas = new Canvas(); // set the canvas
-        canvas = (Canvas)pnlCanvas; // we just need to communicate with pnlSurface as with canvas, so we morph it.
+        pnlCanvas = new GameField(); // set the gameField
+        gameField = (GameField)pnlCanvas; // we just need to communicate with pnlSurface as with gameField, so we morph it.
     }
 
     private class KeyListener extends KeyAdapter{
@@ -72,7 +76,7 @@ public class STetrisWindow extends JFrame{
                         break;
                     }
                 }
-            canvas.repaint();
+            gameField.repaint();
         }
     }
 }

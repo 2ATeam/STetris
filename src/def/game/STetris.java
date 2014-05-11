@@ -1,6 +1,6 @@
 package def.game;
 
-import def.visualization.Canvas;
+import def.visualization.GameField;
 import def.visualization.TilesetProcessor;
 
 
@@ -8,11 +8,10 @@ public class STetris {
 
     private TileMap map;
     private STController controller;
-    private Canvas canvas;
+    private GameField gameField;
     private Stats playerStats;
     private boolean isStuck = false;
     private boolean isLoosed = false;
-
 
     public STetris() {
         TilesetProcessor.getInstance().loadTileset(Config.tilesetPath);
@@ -47,11 +46,12 @@ public class STetris {
             spawnFigure();
             isStuck = true;
         }
-        canvas.repaint();
+        gameField.repaint();
     }
 
     private void gameOver() {
         isLoosed = true;
+        System.out.println("GAME OVER!\n" + playerStats.toString());
     }
 
     private void checkLines() {
@@ -79,8 +79,8 @@ public class STetris {
         controller.addFigure(Figure.createFigure(FigureTypes.getRandom()));
     }
 
-    public void setCanvas(Canvas canvas) {
-        this.canvas = canvas;
+    public void setGameField(GameField gameField) {
+        this.gameField = gameField;
     }
 
     public STController getController() {

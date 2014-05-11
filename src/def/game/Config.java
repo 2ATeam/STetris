@@ -14,11 +14,12 @@ public class Config {
     // modifiable params with default values:
     public static long spawnFrequency = 500L;
     public static long levelScoreLimit = 500L;
+    public static long speedIncrement = 100L;
     public static long lineCost = 100L;
+    public static int blockSize = 32;
     public static int mapWidth = 10;
     public static int mapHeight = 20;
     public static String tilesetPath = "tilesets/tileset.png";
-
 
     // available param indicators:
     private static final String PARAM_SF = "spawn_frequency";
@@ -27,6 +28,8 @@ public class Config {
     private static final String PARAM_LC = "line_cost";
     private static final String PARAM_TP = "tileset_path";
     private static final String PARAM_LS = "level_score_limit";
+    private static final String PARAM_SI = "speed_increment";
+    private static final String PARAM_BS = "block_size";
 
     public static void load() {
         String line;
@@ -54,6 +57,12 @@ public class Config {
                             break;
                         case PARAM_LS:
                             levelScoreLimit = Long.valueOf(param[1]);
+                            break;
+                        case PARAM_SI:
+                            speedIncrement = Long.valueOf(param[1]);
+                            break;
+                        case PARAM_BS:
+                            blockSize = Integer.valueOf(param[1]);
                             break;
                         default:
                             System.err.println("Unavailable param name: " + param[0]);
