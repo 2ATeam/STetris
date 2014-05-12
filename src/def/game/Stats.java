@@ -1,6 +1,8 @@
 package def.game;
 
-public class Stats {
+import java.util.Observable;
+
+public class Stats extends Observable {
 
     private int level;
     private long speed;
@@ -15,18 +17,23 @@ public class Stats {
 
     public Stats() {
         this(1, Config.spawnFrequency);
+        setChanged();
     }
 
     public void increaseScore(int clearedLines) {
         score += (clearedLines * Config.lineCost) + Config.lineCost * multiplier;
         if (score - Config.levelScoreLimit * level >= 0)
             levelUp();
+        setChanged();
+        notifyObservers();
     }
 
     private void levelUp() {
         level++;
         speed -= Config.speedIncrement;
         multiplier *= 2;
+        setChanged();
+        notifyObservers();
     }
 
     public long getScore() {
@@ -41,8 +48,14 @@ public class Stats {
         return speed;
     }
 
+
+
     @Override
     public String toString() {
         return "Level: " + level + "\nSpeed: " + speed + "\nScore: " + score + "\nMultiplier: x" + multiplier;
+    }
+
+    public long getMultiplier() {
+        return multiplier;
     }
 }

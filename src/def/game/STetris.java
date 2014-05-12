@@ -90,4 +90,8 @@ public class STetris {
     public TileMap getMap() {
         return map;
     }
+
+    public Stats getPlayerStats() {
+        return playerStats;
+    }
 }
