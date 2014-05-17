@@ -26,6 +26,10 @@ public class Stats extends Observable {
         if (score - Config.levelScoreLimit * Math.exp(level) >= 0)
             levelUp();
 
+        score += (clearedLines * Config.lineCost) + Config.lineCost * multiplier;
+        if (score - Config.levelScoreLimit * level >= 0)
+            levelUp();
+
         setChanged();
         notifyObservers();
     }

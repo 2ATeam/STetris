@@ -22,7 +22,7 @@ public class Config {
     public static String tilesetPath = "tilesets/tileset.png";
 
     // available param indicators:
-    private static final String PARAM_FS = "spawn_frequency";
+    private static final String PARAM_FS = "falling_speed";
     private static final String PARAM_MW = "map_width";
     private static final String PARAM_MH = "map_height";
     private static final String PARAM_LC = "line_cost";
