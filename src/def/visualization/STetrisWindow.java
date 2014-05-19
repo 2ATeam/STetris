@@ -12,32 +12,37 @@ public class STetrisWindow extends JFrame{
     private JPanel pnlStats;
 
     private GameField gameField;
+    private StatsField statsField;
     private STetris tetris;
     private STController controller;
 
     public STetrisWindow() {
+        tetris = new STetris();
+        tetris.addObserver((StatsField) pnlStats);
+        tetris.setGameField(gameField);
+        statsField.initNextFigureField();
+        gameField.setMap(tetris.getMap());
+        gameField.setBlockSize(Config.blockSize);
+        controller = tetris.getGameController();
+
         setTitle("Swing Tetris");
         setResizable(false);
         setUndecorated(true);
         setContentPane(pnlRootPane);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        tetris = new STetris();
-        controller = tetris.getController();
-        tetris.setGameField(gameField);
-        gameField.setMap(tetris.getMap());
-        tetris.getPlayerStats().addObserver((StatsField) pnlStats);
-        tetris.getPlayerStats().notifyObservers();
         addKeyListener(new KeyListener());
         setVisible(true);
         setSize(Config.mapWidth * Config.blockSize + pnlStats.getWidth(), Config.mapHeight * Config.blockSize);
         setLocationRelativeTo(null);
+
         tetris.mainLoop();
     }
 
     private void createUIComponents() {
         pnlCanvas = new GameField(); // set the gameField
-        gameField = (GameField)pnlCanvas; // we just need to communicate with pnlSurface as with gameField, so we morph it.
+        gameField = (GameField)pnlCanvas; // we just need to communicate with pnlCanvas as with gameField, so we morph it.
         pnlStats = new StatsField();
+        statsField = (StatsField) pnlStats; // same as gameField
     }
 
     private class KeyListener extends KeyAdapter{

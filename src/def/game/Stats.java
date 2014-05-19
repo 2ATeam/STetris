@@ -1,8 +1,6 @@
 package def.game;
 
-import java.util.Observable;
-
-public class Stats extends Observable {
+public class Stats {
 
     private int level;
     private long score;
@@ -17,8 +15,6 @@ public class Stats extends Observable {
 
     public Stats() {
         this(1, Config.fallingSpeed);
-        test(30);
-        setChanged();
     }
 
     public void increaseScore(int clearedLines) {
@@ -29,17 +25,12 @@ public class Stats extends Observable {
         score += (clearedLines * Config.lineCost) + Config.lineCost * multiplier;
         if (score - Config.levelScoreLimit * level >= 0)
             levelUp();
-
-        setChanged();
-        notifyObservers();
     }
 
     private void levelUp() {
         level++;
         speed -= Config.speedIncrement * 2 / level;
         multiplier += multiplier / level;
-        setChanged();
-        notifyObservers();
     }
 
     private void test(int levels){

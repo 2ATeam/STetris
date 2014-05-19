@@ -52,6 +52,43 @@ public class STController {
         }
     }
 
+    /**
+     * Projects passed figure to specified map
+     * @param map target map to project figure on.
+     * @param figure figure to project
+     * @param x x-pos of projected figure
+     * @param y y-pos of projected figure
+     */
+    public void projectFigure(TileMap map, Figure figure, int x, int y){
+        assert figure != null;
+        Tile[][] figureMask = figure.getMask();
+        int projectedX, projectedY;
+        for (int i = 0; i < figure.getRows(); i++) {
+            for (int j = 0; j < figure.getColumns(); j++) {
+                projectedX = x + (figure.getColumns() - 1 - j);
+                projectedY = y - (figure.getRows() - 1 - i);
+                if (isWithin(0, projectedX, map.getCollsAmount() - 1, true) &&
+                        isWithin(0, projectedY, map.getRowsAmount() - 1, true)&&
+                        figure.getMask()[i][j].getType() != TileTypes.FREE)
+                    map.setTile(projectedY, projectedX, figureMask[i][j]);
+            }
+        }
+    }
+
+    /**
+     * Fills specified map with transparent material tiles
+     * @param map map to clear
+     *
+     * NOTE: may be changed to "fillMap(TileMap map, Tile tile)" in future.
+     */
+    public void clearMap(TileMap map) {
+        for (int i = 0; i < map.getRowsAmount(); i++) {
+            for (int j = 0; j < map.getCollsAmount(); j++) {
+                map.setTile(i, j, TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal()));
+            }
+        }
+    }
+
     private void translateFigurePos(Directions direction) {
         if (currentFigure == null) return;
         int curX = curFigurePos.x;
@@ -150,14 +187,6 @@ public class STController {
     public void clearLine(int rowIndex) {
         map.removeRow(rowIndex);
         map.addRow(TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal()));
-    }
-
-    public TileMap getMap() {
-        return map;
-    }
-
-    public void setMap(TileMap map) {
-        this.map = map;
     }
 
 /** UTILS */

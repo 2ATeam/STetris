@@ -1,5 +1,6 @@
 package def.visualization;
 
+import def.game.STetris;
 import def.game.Stats;
 
 import javax.swing.*;
@@ -7,6 +8,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class StatsField extends JPanel implements Observer {
+
+    private GameField nextFigureField;
 
     private JLabel lblScore;
     private JLabel lblLevel;
@@ -22,6 +25,8 @@ public class StatsField extends JPanel implements Observer {
         super();
         BoxLayout boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
         this.setLayout(boxLayout);
+        nextFigureField = new GameField();
+
         lblScore = new JLabel(scoreLblTxt);
         lblLevel = new JLabel(levelLblTxt);
         lblSpeed = new JLabel(speedLblTxt);
@@ -32,11 +37,20 @@ public class StatsField extends JPanel implements Observer {
         add(lblMult);
     }
 
+    public void initNextFigureField(){
+        nextFigureField.setBlockSize(16);
+        add(nextFigureField);
+    }
+
     @Override
     public void update(Observable o, Object arg) {
-        Stats stats;
-        if (o instanceof Stats) {
-            stats = (Stats) o;
+        if (o instanceof STetris) {
+            STetris tetris;
+            tetris = (STetris) o;
+            Stats stats;
+            stats = tetris.getPlayerStats();
+            nextFigureField.setMap(tetris.getNextFigureMap());
+            nextFigureField.repaint();
             lblScore.setText(String.format("%s %d", scoreLblTxt, stats.getScore()));
             lblLevel.setText(String.format("%s %d", levelLblTxt, stats.getLevel()));
             lblSpeed.setText(String.format("%s %.1f", speedLblTxt, stats.getSpeed()));

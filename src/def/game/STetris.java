@@ -3,13 +3,18 @@ package def.game;
 import def.visualization.GameField;
 import def.visualization.TilesetProcessor;
 
+import java.util.Observable;
 
-public class STetris {
+
+public class STetris extends Observable{
 
     private TileMap map;
-    private STController controller;
+    private TileMap nextFigureMap;
+    private STController gameController;
     private GameField gameField;
     private Stats playerStats;
+    private Figure currentFigure;
+    private Figure nextFigure;
     private boolean isStuck = false;
     private boolean isLoosed = false;
 
@@ -17,13 +22,16 @@ public class STetris {
         TilesetProcessor.getInstance().loadTileset(Config.tilesetPath);
         TilesetProcessor.getInstance().splitIntoChunks(4, 6, 64, 64);
         map = new TileMap(Config.mapHeight, Config.mapWidth);
-        controller = new STController(map);
+        nextFigureMap = new TileMap(4, 5);
+        gameController = new STController(map);
         playerStats = new Stats(); // default.
+        nextFigure = Figure.createFigure(FigureTypes.getRandom());
     }
 
     public void mainLoop() {
         long lastDropTime = System.currentTimeMillis();
         spawnFigure();
+        gameController.projectFigure(nextFigureMap, nextFigure, 1, 2);
 
         while (!isLoosed) {
             if (System.currentTimeMillis() - lastDropTime > playerStats.getSpeed()) {
@@ -34,8 +42,8 @@ public class STetris {
     }
 
     private void tick() {
-        if(!controller.willOverlap(Directions.DOWN)) {
-            controller.moveFigure(Directions.DOWN);
+        if(!gameController.willOverlap(Directions.DOWN)) {
+            gameController.moveFigure(Directions.DOWN);
             isStuck = false;
         }
         else if(isStuck) {
@@ -44,7 +52,11 @@ public class STetris {
         else{
             checkLines();
             spawnFigure();
+            gameController.clearMap(nextFigureMap);
+            gameController.projectFigure(nextFigureMap, nextFigure, 1, 2);
             isStuck = true;
+            setChanged();
+            notifyObservers();
         }
         gameField.repaint();
     }
@@ -64,7 +76,7 @@ public class STetris {
                 if (map.getTile(i, j).getType() == TileTypes.BLOCK) ++blocksInLine;
             }
             if (blocksInLine == map.getCollsAmount()) {
-                controller.clearLine(i);
+                gameController.clearLine(i);
                 ++clearedLines;
             }
             else --i;
@@ -76,15 +88,19 @@ public class STetris {
     }
 
     public void spawnFigure() {
-        controller.addFigure(Figure.createFigure(FigureTypes.getRandom()));
+        currentFigure = nextFigure;
+        nextFigure = Figure.createFigure(FigureTypes.getRandom());
+        gameController.addFigure(currentFigure);
     }
 
     public void setGameField(GameField gameField) {
         this.gameField = gameField;
+        setChanged();
+        notifyObservers();
     }
 
-    public STController getController() {
-        return controller;
+    public STController getGameController() {
+        return gameController;
     }
 
     public TileMap getMap() {
@@ -93,5 +109,9 @@ public class STetris {
 
     public Stats getPlayerStats() {
         return playerStats;
+    }
+
+    public TileMap getNextFigureMap() {
+        return nextFigureMap;
     }
 }
