@@ -5,6 +5,8 @@ import def.visualization.TilesetProcessor;
 
 import java.awt.*;
 
+import static def.game.Materials.*;
+
 public class STController {
 
     private TileMap map;
@@ -68,23 +70,23 @@ public class STController {
                 projectedX = x + (figure.getColumns() - 1 - j);
                 projectedY = y - (figure.getRows() - 1 - i);
                 if (isWithin(0, projectedX, map.getCollsAmount() - 1, true) &&
-                        isWithin(0, projectedY, map.getRowsAmount() - 1, true)&&
-                        figure.getMask()[i][j].getType() != TileTypes.FREE)
-                    map.setTile(projectedY, projectedX, figureMask[i][j]);
+                    isWithin(0, projectedY, map.getRowsAmount() - 1, true)&&
+                    figure.getMask()[i][j].getType() != TileTypes.FREE) {
+                       map.setTile(projectedY, projectedX, figureMask[i][j]);
+                }
             }
         }
     }
 
     /**
      * Fills specified map with transparent material tiles
-     * @param map map to clear
-     *
+     * @param map map to clear.
      * NOTE: may be changed to "fillMap(TileMap map, Tile tile)" in future.
      */
     public void clearMap(TileMap map) {
         for (int i = 0; i < map.getRowsAmount(); i++) {
             for (int j = 0; j < map.getCollsAmount(); j++) {
-                map.setTile(i, j, TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal()));
+                map.setTile(i, j, TilesetProcessor.getInstance().getTileForMaterial(TRANSPARENT_MATERIAL));
             }
         }
     }
@@ -115,7 +117,7 @@ public class STController {
     }
 
     public void moveFigure(Directions direction) {
-        fillMaskRegion(TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal()));
+        fillMaskRegion(TilesetProcessor.getInstance().getTileForMaterial(TRANSPARENT_MATERIAL));
         translateFigurePos(direction);
         projectFigure();
     }
@@ -147,7 +149,7 @@ public class STController {
         assert currentFigure != null;
         Point curPos = (Point) curFigurePos.clone();
         boolean isOverlapping;
-        fillMaskRegion(TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal()));
+        fillMaskRegion(TilesetProcessor.getInstance().getTileForMaterial(TRANSPARENT_MATERIAL));
         translateFigurePos(direction);
         isOverlapping = isOverlapping();
         curFigurePos = curPos;
@@ -160,7 +162,7 @@ public class STController {
         int figEndX = curFigurePos.x + currentFigure.getRows() - 1;
         int figEndY = curFigurePos.y;
         Figure tmp = (Figure)currentFigure.clone();
-        fillMaskRegion(TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal()));
+        fillMaskRegion(TilesetProcessor.getInstance().getTileForMaterial(TRANSPARENT_MATERIAL));
         rotateFigure(clockwise);
         boolean willOverlap = isOverlapping();
         currentFigure = tmp;
@@ -179,14 +181,14 @@ public class STController {
 
     public void rotate(boolean clockwise){
         assert currentFigure != null;
-        fillMaskRegion(TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal()));
+        fillMaskRegion(TilesetProcessor.getInstance().getTileForMaterial(TRANSPARENT_MATERIAL));
         rotateFigure(clockwise);
         projectFigure();
     }
 
     public void clearLine(int rowIndex) {
         map.removeRow(rowIndex);
-        map.addRow(TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal()));
+        map.addRow(TilesetProcessor.getInstance().getTileForMaterial(TRANSPARENT_MATERIAL));
     }
 
 /** UTILS */

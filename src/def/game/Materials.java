@@ -1,7 +1,8 @@
 package def.game;
 
 /**
- * Created by Lux on 06.05.2014.
+ * All available block Materials.
+ * @author Alvo.
  */
 public enum Materials {
     L_MATERIAL,

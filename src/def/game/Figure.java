@@ -3,6 +3,8 @@ package def.game;
 import def.visualization.Tile;
 import def.visualization.TilesetProcessor;
 
+import static def.game.Materials.*;
+
 public class Figure {
 
     private int columns, rows;
@@ -18,68 +20,68 @@ public class Figure {
         switch (type) {
             case L_SHAPE: {
                 figure = new Figure(3, 2);
-                figure.mask = new Tile[][]{{TilesetProcessor.getInstance().getTileAt(Materials.L_MATERIAL.ordinal()),
-                                            TilesetProcessor.getInstance().getTileAt(Materials.L_MATERIAL.ordinal()),
-                                            TilesetProcessor.getInstance().getTileAt(Materials.L_MATERIAL.ordinal())},
-                                          { TilesetProcessor.getInstance().getTileAt(Materials.L_MATERIAL.ordinal()),
-                                            TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal()),
-                                            TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal())}};
+                figure.mask = new Tile[][]{{TilesetProcessor.getInstance().getTileForMaterial(L_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(L_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(L_MATERIAL)},
+                                          { TilesetProcessor.getInstance().getTileForMaterial(L_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(TRANSPARENT_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(TRANSPARENT_MATERIAL)}};
                 break;
             }
             case J_SHAPE: {
                 figure = new Figure(3, 2);
-                figure.mask = new Tile[][]{{TilesetProcessor.getInstance().getTileAt(Materials.J_MATERIAL.ordinal()), 
-                                            TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal()), 
-                                            TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal())},
-                                          { TilesetProcessor.getInstance().getTileAt(Materials.J_MATERIAL.ordinal()), 
-                                            TilesetProcessor.getInstance().getTileAt(Materials.J_MATERIAL.ordinal()), 
-                                            TilesetProcessor.getInstance().getTileAt(Materials.J_MATERIAL.ordinal())}};
+                figure.mask = new Tile[][]{{TilesetProcessor.getInstance().getTileForMaterial(J_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(TRANSPARENT_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(TRANSPARENT_MATERIAL)},
+                                          { TilesetProcessor.getInstance().getTileForMaterial(J_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(J_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(J_MATERIAL)}};
                 break;
             }
             case Z_SHAPE: {
                 figure = new Figure(3, 2);
-                figure.mask = new Tile[][]{{TilesetProcessor.getInstance().getTileAt(Materials.Z_MATERIAL.ordinal()), 
-                                            TilesetProcessor.getInstance().getTileAt(Materials.Z_MATERIAL.ordinal()), 
-                                            TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal())},
-                                          { TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal()),
-                                            TilesetProcessor.getInstance().getTileAt(Materials.Z_MATERIAL.ordinal()), 
-                                            TilesetProcessor.getInstance().getTileAt(Materials.Z_MATERIAL.ordinal())}};
+                figure.mask = new Tile[][]{{TilesetProcessor.getInstance().getTileForMaterial(Z_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(Z_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(TRANSPARENT_MATERIAL)},
+                                          { TilesetProcessor.getInstance().getTileForMaterial(TRANSPARENT_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(Z_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(Z_MATERIAL)}};
                 break;
             }
             case S_SHAPE: {
                 figure = new Figure(3, 2);
-                figure.mask = new Tile[][]{{TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal()), 
-                                           TilesetProcessor.getInstance().getTileAt(Materials.S_MATERIAL.ordinal()), 
-                                           TilesetProcessor.getInstance().getTileAt(Materials.S_MATERIAL.ordinal())},
-                                         { TilesetProcessor.getInstance().getTileAt(Materials.S_MATERIAL.ordinal()),
-                                           TilesetProcessor.getInstance().getTileAt(Materials.S_MATERIAL.ordinal()), 
-                                           TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal())}};
+                figure.mask = new Tile[][]{{TilesetProcessor.getInstance().getTileForMaterial(TRANSPARENT_MATERIAL),
+                                           TilesetProcessor.getInstance().getTileForMaterial(S_MATERIAL),
+                                           TilesetProcessor.getInstance().getTileForMaterial(S_MATERIAL)},
+                                         { TilesetProcessor.getInstance().getTileForMaterial(S_MATERIAL),
+                                           TilesetProcessor.getInstance().getTileForMaterial(S_MATERIAL),
+                                           TilesetProcessor.getInstance().getTileForMaterial(TRANSPARENT_MATERIAL)}};
                 break;
             }
             case T_SHAPE: {
                 figure = new Figure(3, 2);
-                figure.mask = new Tile[][]{{TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal()),
-                                            TilesetProcessor.getInstance().getTileAt(Materials.T_MATERIAL.ordinal()), 
-                                            TilesetProcessor.getInstance().getTileAt(Materials.TRANSPARENT_MATERIAL.ordinal())},
-                                          { TilesetProcessor.getInstance().getTileAt(Materials.T_MATERIAL.ordinal()), 
-                                            TilesetProcessor.getInstance().getTileAt(Materials.T_MATERIAL.ordinal()), 
-                                            TilesetProcessor.getInstance().getTileAt(Materials.T_MATERIAL.ordinal())}};
+                figure.mask = new Tile[][]{{TilesetProcessor.getInstance().getTileForMaterial(TRANSPARENT_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(T_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(TRANSPARENT_MATERIAL)},
+                                          { TilesetProcessor.getInstance().getTileForMaterial(T_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(T_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(T_MATERIAL)}};
                 break;
             }
             case O_SHAPE: {
                 figure = new Figure(2, 2);
-                figure.mask = new Tile[][]{{TilesetProcessor.getInstance().getTileAt(Materials.O_MATERIAL.ordinal()), 
-                                            TilesetProcessor.getInstance().getTileAt(Materials.O_MATERIAL.ordinal())},
-                                          { TilesetProcessor.getInstance().getTileAt(Materials.O_MATERIAL.ordinal()), 
-                                            TilesetProcessor.getInstance().getTileAt(Materials.O_MATERIAL.ordinal())}};
+                figure.mask = new Tile[][]{{TilesetProcessor.getInstance().getTileForMaterial(O_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(O_MATERIAL)},
+                                          { TilesetProcessor.getInstance().getTileForMaterial(O_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(O_MATERIAL)}};
                 break;
             }
             case I_SHAPE: {
                 figure = new Figure(4, 1);
-                figure.mask = new Tile[][]{{TilesetProcessor.getInstance().getTileAt(Materials.I_MATERIAL.ordinal()),
-                                            TilesetProcessor.getInstance().getTileAt(Materials.I_MATERIAL.ordinal()),
-                                            TilesetProcessor.getInstance().getTileAt(Materials.I_MATERIAL.ordinal()),
-                                            TilesetProcessor.getInstance().getTileAt(Materials.I_MATERIAL.ordinal())}};
+                figure.mask = new Tile[][]{{TilesetProcessor.getInstance().getTileForMaterial(I_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(I_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(I_MATERIAL),
+                                            TilesetProcessor.getInstance().getTileForMaterial(I_MATERIAL)}};
                 break;
             }
         }

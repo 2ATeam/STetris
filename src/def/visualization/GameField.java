@@ -9,11 +9,11 @@ public class GameField extends JPanel {
 
     private TileMap map;
     private int blockSize;
+    private static final int mapOffset = -22; // compensating the window decoration.
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        final int mapOffset = 0;
         Graphics2D g2d = (Graphics2D) g;
         for (int i = 0; i < map.getRowsAmount(); i++) {
             for (int j = 0; j < map.getCollsAmount(); j++) {

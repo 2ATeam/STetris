@@ -19,12 +19,14 @@ public class Stats {
 
     public void increaseScore(int clearedLines) {
         score += (clearedLines * clearedLines * Config.lineCost) + Config.lineCost * multiplier;
-        if (score - Config.levelScoreLimit * Math.exp(level) >= 0)
+        if (score - Config.levelScoreLimit * Math.exp(level) >= 0) {
             levelUp();
+        }
 
         score += (clearedLines * Config.lineCost) + Config.lineCost * multiplier;
-        if (score - Config.levelScoreLimit * level >= 0)
+        if (score - Config.levelScoreLimit * level >= 0) {
             levelUp();
+        }
     }
 
     private void levelUp() {

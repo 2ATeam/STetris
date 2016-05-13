@@ -43,10 +43,10 @@ public class StatsField extends JPanel implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        if (o instanceof STetris) {
+    public void update(Observable target, Object arg) {
+        if (target instanceof STetris) {
             STetris tetris;
-            tetris = (STetris) o;
+            tetris = (STetris) target;
             Stats stats;
             stats = tetris.getPlayerStats();
             nextFigureField.setMap(tetris.getNextFigureMap());

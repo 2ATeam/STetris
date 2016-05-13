@@ -9,13 +9,17 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import static def.game.Materials.TRANSPARENT_MATERIAL;
+import static def.game.TileTypes.*;
 
 public final class TilesetProcessor {
 
     private static TilesetProcessor instance;
     private BufferedImage tileset;
     private ArrayList<BufferedImage> slicedTileset;
-    private Tile[] tilePool;
+    private HashMap<Materials, Tile> tilePool;
 
     public void loadTileset(String tilesetPath) {
         try {
@@ -26,24 +30,31 @@ public final class TilesetProcessor {
     }
 
     public static TilesetProcessor getInstance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new TilesetProcessor();
-
+        }
         return instance;
     }
 
+    /**
+     * Fill the tile pool with chunks, sliced form the original texture atlas.
+     */
     private void fillTilePool() {
-        tilePool = new Tile[Materials.values().length];
-        tilePool[Materials.L_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.L_MATERIAL.ordinal()), TileTypes.BLOCK);
-        tilePool[Materials.J_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.J_MATERIAL.ordinal()), TileTypes.BLOCK);
-        tilePool[Materials.Z_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.Z_MATERIAL.ordinal()), TileTypes.BLOCK);
-        tilePool[Materials.S_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.S_MATERIAL.ordinal()), TileTypes.BLOCK);
-        tilePool[Materials.T_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.T_MATERIAL.ordinal()), TileTypes.BLOCK);
-        tilePool[Materials.O_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.O_MATERIAL.ordinal()), TileTypes.BLOCK);
-        tilePool[Materials.I_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.I_MATERIAL.ordinal()), TileTypes.BLOCK);
-        tilePool[Materials.TRANSPARENT_MATERIAL.ordinal()] = new Tile(getChunkAt(Materials.TRANSPARENT_MATERIAL.ordinal()), TileTypes.FREE);
+        tilePool = new HashMap<>();
+        final Materials[] materials = Materials.values();
+        for (int i = 0; i < materials.length; i++) {
+            final TileTypes tileType = materials[i].equals(TRANSPARENT_MATERIAL) ? FREE : BLOCK;
+            tilePool.put(materials[i], new Tile(getChunkAt(i), tileType));
+        }
     }
 
+    /**
+     * Split the image atlas into chunks(tiles) of given width and height.
+     * @param rows rows of tiles amount.
+     * @param colls columns of tiles amount.
+     * @param chunkWidth chunk width.
+     * @param chunkHeight chunk height.
+     */
     public void splitIntoChunks(int rows, int colls, int chunkWidth, int chunkHeight) {
         ArrayList<BufferedImage> chunks = new ArrayList<>();
         BufferedImage chunk;
@@ -83,7 +94,7 @@ public final class TilesetProcessor {
         }
     }
 
-    public Tile getTileAt(int index) {
-        return tilePool[index];
+    public Tile getTileForMaterial(Materials material) {
+        return tilePool.get(material);
     }
 }

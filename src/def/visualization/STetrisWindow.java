@@ -27,8 +27,8 @@ public class STetrisWindow extends JFrame{
 
         setTitle("Swing Tetris");
         setResizable(false);
-        setUndecorated(true);
         setContentPane(pnlRootPane);
+        setUndecorated(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         addKeyListener(new KeyListener());
         setVisible(true);
@@ -45,6 +45,9 @@ public class STetrisWindow extends JFrame{
         statsField = (StatsField) pnlStats; // same as gameField
     }
 
+    /**
+     * Inner class for handing the user input.
+     */
     private class KeyListener extends KeyAdapter{
 
         @Override
